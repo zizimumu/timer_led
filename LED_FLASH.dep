@@ -531,7 +531,7 @@ I (F:\Demo_self\STM32F1XX\timer_led\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc\stm
 I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
 I (F:\Demo_self\STM32F1XX\timer_led\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc\stm32f10x_wwdg.h)(0x4E6F0950)
 I (F:\Demo_self\STM32F1XX\timer_led\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc\misc.h)(0x5278DDEA)
-F (.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c)(0x5A587794)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I.\App -I.\LIB\CMSISV1.2.0\Core\CM3 -I.\LIB\CMSISV1.2.0\Core\CM3\startup\arm -I.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\src -I.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_LD -o .\obj\stm32f10x_rtc.o --omf_browse .\obj\stm32f10x_rtc.crf --depend .\obj\stm32f10x_rtc.d)
+F (.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c)(0x5A587EAE)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I.\App -I.\LIB\CMSISV1.2.0\Core\CM3 -I.\LIB\CMSISV1.2.0\Core\CM3\startup\arm -I.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\src -I.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_LD -o .\obj\stm32f10x_rtc.o --omf_browse .\obj\stm32f10x_rtc.crf --depend .\obj\stm32f10x_rtc.d)
 I (F:\Demo_self\STM32F1XX\timer_led\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc\stm32f10x_rtc.h)(0x5A58527B)
 I (F:\Demo_self\STM32F1XX\timer_led\LIB\CMSISV1.2.0\Core\CM3\stm32f10x.h)(0x5278E3FA)
 I (F:\Demo_self\STM32F1XX\timer_led\LIB\CMSISV1.2.0\Core\CM3\core_cm3.h)(0x4E6F0952)

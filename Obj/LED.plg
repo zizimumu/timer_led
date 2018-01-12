@@ -7,19 +7,3 @@ F:\Demo_self\STM32F1XX\timer_led\LED.uvproj
 Project File Date:  01/12/2018
 
 <h2>Output:</h2>
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling readline.c...
-App\Readline.h(18): warning:  #47-D: incompatible redefinition of macro "NULL" (declared at line 48 of "C:\Keil\ARM\ARMCC\bin\..\include\string.h")
-compiling stm32f10x_rtc.c...
-linking...
-Program Size: Code=10588 RO-data=1100 RW-data=208 ZI-data=2488  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 1 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.

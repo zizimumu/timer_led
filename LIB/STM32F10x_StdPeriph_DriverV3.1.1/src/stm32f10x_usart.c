@@ -1115,6 +1115,21 @@ unsigned char usartCharGet(void)
 	while((USART1->SR&0X20)==0);
 	return (unsigned char)(USART1->DR & 0x00ff);      
 }
+
+
+#define WAITT_KEY_TIMER 3000   //ms
+unsigned char usartCharGet_timeout(void)
+{      
+	unsigned int cnt = 0;
+	while((USART1->SR&0X20)==0){
+			delay_ms(1);
+			cnt++;
+			if(cnt >= WAITT_KEY_TIMER)
+				return 1;
+	}
+	return 0;    
+}
+
 void usartBytesSend(unsigned char *charData,unsigned char len)
 {   
 	unsigned int i = 0;

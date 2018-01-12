@@ -137,30 +137,36 @@ int main(void)
 
 	printf("system startimg...\r\n");
 	printf("user set timer is %d:%d\r\n",USR_DEFINE_HOUR,USR_DEFINE_MIN);
-	while(1){
-		main_loop();
-		
-		
-		RTC_Get(&timer);
-		
-		if((timer.hour == USR_DEFINE_HOUR) && \
-			  (timer.min == USR_DEFINE_MIN) ){
-				pwm_start = 1;
-				pwm_stop = 0;
-		}
-		if(pwm_start){
-				printf("pwm startimg...\r\n");
-				pwm_start_out();
-				pwm_start = 0;
-				printf("pwm end...\r\n");
-		}
-		
-		if((timer.hour - USR_DEFINE_HOUR == USR_DEFINE_PWM_HOUR )&& (pwm_stop == 0)){
-				printf("shutdown the LED ...\r\n");
-				TIM_SetCompare2(TIM3,0);
-				pwm_stop = 1;
+	
+	
+	if(usartCharGet_timeout()){
+		while(1){
+
+			RTC_Get(&timer);
+			
+			if((timer.hour == USR_DEFINE_HOUR) && \
+					(timer.min == USR_DEFINE_MIN) ){
+					pwm_start = 1;
+					pwm_stop = 0;
+			}
+			if(pwm_start){
+					printf("pwm startimg...\r\n");
+					pwm_start_out();
+					pwm_start = 0;
+					printf("pwm end...\r\n");
+			}
+			
+			if((timer.hour - USR_DEFINE_HOUR == USR_DEFINE_PWM_HOUR )&& (pwm_stop == 0)){
+					printf("shutdown the LED ...\r\n");
+					TIM_SetCompare2(TIM3,0);
+					pwm_stop = 1;
+			}
 		}
 	}
+	else{
+		main_loop();
+	}
+
 	
 }
 
