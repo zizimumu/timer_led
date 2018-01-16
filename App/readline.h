@@ -15,7 +15,10 @@ struct cmd_tbl_s {
 };
 
 typedef struct cmd_tbl_s	cmd_tbl_t;
+
+#ifndef NULL
 #define NULL ((void *)0)
+#endif
 
 extern void usartCharSend(unsigned char charData);
 extern  unsigned char usartCharGet(void);

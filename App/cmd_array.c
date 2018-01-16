@@ -1,7 +1,8 @@
- #include "Readline.h"
- #include <stdio.h>
+#include "Readline.h"
+#include <stdio.h>
 #include <string.h>
- #include "stm32f10x_rtc.h"
+#include "stm32f10x_rtc.h"
+#include "stm32f10x.h"
  
  
 int  test_function(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
@@ -60,10 +61,39 @@ int  rtc_function(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
 	}
 	return 1;
 }
+
+
+int  pwm_set(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
+{
+	int argc = b;
+	unsigned int duty = 0;
+
+	if(argc != 2){
+		printf("pwm_set param err,please use e.g.  pwm 50\r\n");
+		return -1;
+	}
+	
+#define TIMER_COUNT 36000
+
+	sscanf(buf[1],"%d",&duty);
+	if(duty > 100){
+		printf("pwm_set param err,please use e.g.  pwm 50\r\n");
+		return -1;
+	}
+	printf("setting pwm duty to percent %d\r\n",duty);
+	
+	duty = (TIMER_COUNT*duty)/100;
+	TIM_SetCompare2(TIM3,duty);
+
+	return 1;
+}
+
+
  
  cmd_tbl_t gCmd_array[] = {
  {"test",1,1,test_function,"just for test"},
- {"rtc",1,1,rtc_function,"just for test"}
+ {"rtc",1,1,rtc_function,"rtc function"},
+ {"pwm",1,1,pwm_set,"pwm set"}
 };
 
 

@@ -364,7 +364,7 @@ u8 RTC_UserInit(void)
 		PWR_BackupAccessCmd(ENABLE);	
 		
 		/* Reset Backup Domain ,RCC_BDCR register*/
-		BKP_DeInit();	
+		//BKP_DeInit();	
 		
 		/* Enable LSE */
 		RCC_LSEConfig(RCC_LSE_ON);	
@@ -390,8 +390,8 @@ u8 RTC_UserInit(void)
 		RTC_SetPrescaler(32767);
 		/* Wait until last write operation on RTC registers has finished */
 		RTC_WaitForLastTask();	
-		RTC_Set(2013,12,17,14,4,55); 
-		BKP_WriteBackupRegister(BKP_DR1, 0X5050);	
+		//RTC_Set(2013,12,17,14,4,55); 
+		//BKP_WriteBackupRegister(BKP_DR1, 0X5050);	
 	}
 	else
 		{

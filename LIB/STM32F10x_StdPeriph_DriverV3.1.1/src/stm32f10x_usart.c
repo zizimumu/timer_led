@@ -1118,9 +1118,15 @@ unsigned char usartCharGet(void)
 
 
 #define WAITT_KEY_TIMER 3000   //ms
+
+extern void delay_ms(u16 nms);
+
 unsigned char usartCharGet_timeout(void)
 {      
 	unsigned int cnt = 0;
+	
+	printf("press any KEY to enter cmd mode\r\n");
+	
 	while((USART1->SR&0X20)==0){
 			delay_ms(1);
 			cnt++;

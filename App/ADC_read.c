@@ -2,8 +2,10 @@
 
 #include "app.h"
 #include <stdio.h>
+#include "stm32f10x_usart.h"
 
 #define TIMER_COUNT 36000  //1Khz
+#define MAX_PWM_COUNT  TIMER_COUNT
 
 void PWM_Configuration(void)
 	{
@@ -93,6 +95,8 @@ void Init_All_Periph(void)
 
 	LedInit();
 	RTC_UserInit();
+	
+	PWM_Configuration();
 
 
 
@@ -140,8 +144,9 @@ int main(void)
 	
 	
 	if(usartCharGet_timeout()){
+		printf("no user stop,step into normal mode\r\n");
 		while(1){
-
+					
 			RTC_Get(&timer);
 			
 			if((timer.hour == USR_DEFINE_HOUR) && \
@@ -161,9 +166,12 @@ int main(void)
 					TIM_SetCompare2(TIM3,0);
 					pwm_stop = 1;
 			}
+			
+			
 		}
 	}
 	else{
+
 		main_loop();
 	}
 

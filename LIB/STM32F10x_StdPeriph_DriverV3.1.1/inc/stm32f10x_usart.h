@@ -381,7 +381,7 @@ void usartCharSend(unsigned char charData);
 void usartStrSend(char * str);
 void DMAPrint(char * str);
 void PrintInt(int32_t sendValue,unsigned char rate,unsigned char style);
-
+unsigned char usartCharGet_timeout(void);
 
 #if USART_DMA_EN
 #define DebugPrint(X) DMAPrint(X)
