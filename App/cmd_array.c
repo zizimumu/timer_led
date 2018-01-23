@@ -87,13 +87,48 @@ int  pwm_set(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
 
 	return 1;
 }
+int  alarm_set(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
+{
+	int argc = b;
+  int pwm_min,hour,min;
+	uint16_t back;
+	char tmp[16];
 
+	if(argc != 3){
+		printf("alarm_set param err,please use e.g.  alarm 0620 10\r\n");
+		return -1;
+	}
+	memcpy(tmp,buf[1],4);
+	tmp[4] = 0;
+	sscanf(&tmp[2],"%d",&min);
+	tmp[2] = 0;
+	sscanf(&tmp[0],"%d",&hour);
+	
+	sscanf(buf[2],"%d",&pwm_min);
+
+	if(hour <24 && hour >=0 && min <60 && min >= 0 && pwm_min <= 60){
+		back = (uint16_t)hour<<8 | (uint16_t)min;
+		
+		printf("alarm setting is %d:%d, pwm min is %d\r\n",hour,min,pwm_min);
+		BKP_WriteBackupRegister(BKP_DR1, back);	
+		BKP_WriteBackupRegister(BKP_DR2, pwm_min);	
+	}
+	else{
+		printf("param err\r\n");
+	}
+	
+	
+
+
+	return 1;
+}
 
  
  cmd_tbl_t gCmd_array[] = {
  {"test",1,1,test_function,"just for test"},
  {"rtc",1,1,rtc_function,"rtc function"},
- {"pwm",1,1,pwm_set,"pwm set"}
+ {"pwm",1,1,pwm_set,"pwm set"},
+ {"alarm",1,1,alarm_set,"alarm set"}
 };
 
 

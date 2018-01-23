@@ -106,10 +106,15 @@ void Init_All_Periph(void)
 
 extern void main_loop(void );
 tm timer;
-#define USR_DEFINE_HOUR 6
-#define USR_DEFINE_MIN 20
-#define USR_DEFINE_PWM_COUNT 10
-#define USR_DEFINE_PWM_HOUR 1
+
+int g_user_alarm_hour = 0;
+int g_user_alarm_min = 0;
+int g_user_pwm_min = 0;
+
+#define USR_DEFINE_HOUR g_user_alarm_hour
+#define USR_DEFINE_MIN g_user_alarm_min
+#define USR_DEFINE_PWM_COUNT g_user_pwm_min  //the min from 0 to Max
+#define USR_DEFINE_PWM_HOUR 1			//the hour from on to off
 
 
 void pwm_start_out(void)
@@ -131,41 +136,90 @@ void pwm_start_out(void)
 }
 
 
+int pwm_start = 0,pwm_stop = 0;
+
+void pwm_start_irqhandler(void *arg)
+{
+	pwm_start = 1;
+}
+
+void pwm_stop_irqhandler(void *arg)
+{
+	pwm_stop = 1;
+}
+	
+	
+
 int main(void)
 {  
-	int pwm_start = 0,pwm_stop = 0;
 	
-	
+	unsigned int sec;
+	uint16_t back;
+	tm timer_dest;
 	Init_All_Periph();
 
+	g_user_alarm_hour = 6;
+	g_user_alarm_min = 20;
+	g_user_pwm_min = 10;
 
-	printf("system startimg...\r\n");
-	printf("user set timer is %d:%d\r\n",USR_DEFINE_HOUR,USR_DEFINE_MIN);
 	
+	printf("system startimg...\r\n");
+	back = BKP_ReadBackupRegister(BKP_DR1);
+	if(back != 0){
+		g_user_alarm_hour = ((back &0xff00)>>8)%24;
+		g_user_alarm_min = (back &0xff)%60;
+	}	
+	back = BKP_ReadBackupRegister(BKP_DR2);
+	if(back != 0){
+		g_user_pwm_min = (back & 0xff)%60;
+	}
+	
+	RTC_Get(&timer);
+	printf("current timer is :\r\n");
+	printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
+	printf("user set timer is %d:%d ,pwm mini %d\r\n",USR_DEFINE_HOUR,USR_DEFINE_MIN,USR_DEFINE_PWM_COUNT);
+	
+	timer_dest.hour = USR_DEFINE_HOUR;
+	timer_dest.min = USR_DEFINE_MIN;
+	RTC_SetAlarm_user(&timer_dest,pwm_start_irqhandler);
 	
 	if(usartCharGet_timeout()){
-		printf("no user stop,step into normal mode\r\n");
+		printf("\r\nno user stop,step into normal mode\r\n");
 		while(1){
 					
-			RTC_Get(&timer);
-			
-			if((timer.hour == USR_DEFINE_HOUR) && \
-					(timer.min == USR_DEFINE_MIN) ){
-					pwm_start = 1;
-					pwm_stop = 0;
-			}
+			//RTC_Get(&timer);
 			if(pwm_start){
+					RTC_Get(&timer);
+
 					printf("pwm startimg...\r\n");
+					printf("current timer is :\r\n");
+					printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
+				
 					pwm_start_out();
 					pwm_start = 0;
+				
+					timer_dest.hour = USR_DEFINE_HOUR+USR_DEFINE_PWM_HOUR;
+					RTC_SetAlarm_user(&timer_dest,pwm_stop_irqhandler);
+
 					printf("pwm end...\r\n");
+				
 			}
 			
-			if((timer.hour - USR_DEFINE_HOUR == USR_DEFINE_PWM_HOUR )&& (pwm_stop == 0)){
+			if(pwm_stop){
 					printf("shutdown the LED ...\r\n");
 					TIM_SetCompare2(TIM3,0);
-					pwm_stop = 1;
+					pwm_stop = 0;
+				
+					timer_dest.hour = USR_DEFINE_HOUR;
+					RTC_SetAlarm_user(&timer_dest,pwm_start_irqhandler);
 			}
+			
+			printf("\r\n\r\ngo to sleep\r\n");
+			//__WFI();
+			PWR_EnterSTOPMode(PWR_Regulator_LowPower,PWR_STOPEntry_WFI);
+			
+			printf("system resum\r\n");
+			//PWR_EnterSTANDBYMode();
 			
 			
 		}

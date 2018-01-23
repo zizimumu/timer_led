@@ -341,6 +341,8 @@ u8 RTC_Get_Week(u16 year,u8 month,u8 day)
 void setRTC_NVIC(void )
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
+	EXTI_InitTypeDef EXTI_InitStructure;
+	
 	
 	NVIC_InitStructure.NVIC_IRQChannel =RTC_IRQn;			
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;	
@@ -348,12 +350,28 @@ void setRTC_NVIC(void )
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;								
 		
 	NVIC_Init(&NVIC_InitStructure); 	
+	
+	
+	  NVIC_InitStructure.NVIC_IRQChannel = RTCAlarm_IRQn;  
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;  
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;  
+  NVIC_Init(&NVIC_InitStructure); 
+	
+	EXTI_ClearITPendingBit(EXTI_Line17); 
+	EXTI_InitStructure.EXTI_Line = EXTI_Line17;	//设置按键所有的外部线路
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;			//设外外部中断模式:EXTI线路为中断请求
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  //外部中断触发沿选择:设置输入线路下降沿为中断请求
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+	
 }
 
 u8 RTC_UserInit(void)
 {
 	
 	uint32_t temp=0;
+	
 	//check if it is the first time init
 	//if (BKP_ReadBackupRegister(BKP_DR1) != 0x5050){	 			
 	if (1){	
@@ -382,7 +400,7 @@ u8 RTC_UserInit(void)
 		/* Wait until last write operation on RTC registers has finished */
 		RTC_WaitForLastTask();	
 		/* Enable the RTC Second */
-		RTC_ITConfig(RTC_IT_SEC, ENABLE);	
+		RTC_ITConfig(RTC_IT_ALR, ENABLE);	
 		/* Wait until last write operation on RTC registers has finished */
 		RTC_WaitForLastTask();	
 		/* Set RTC prescaler: set RTC period to 1sec */
@@ -392,6 +410,11 @@ u8 RTC_UserInit(void)
 		RTC_WaitForLastTask();	
 		//RTC_Set(2013,12,17,14,4,55); 
 		//BKP_WriteBackupRegister(BKP_DR1, 0X5050);	
+		
+		
+
+	
+	
 	}
 	else
 		{
@@ -420,7 +443,9 @@ u8 RTC_UserInit(void)
 	/* Clear reset flags */
 	RCC_ClearFlag();	//清除RCC的复位标志位
 
-	//setRTC_NVIC();
+	 //RTC_EXTI_INITIAL(ENABLE);
+		
+	setRTC_NVIC();
 	return 0; //ok
 }
 
@@ -475,7 +500,8 @@ u8 RTC_Get(tm *timer)
 	timecount+=RTC->CNTL;			 
 
 	temp=timecount/86400;   //得到天数(秒钟数对应的)
-	if(daycnt!=temp)//超过一天了
+	// if(daycnt!=temp)//超过一天了
+	if(1)
 	{	  
 		daycnt=temp;
 		temp1=1970;	//从1970年开始
@@ -515,6 +541,50 @@ u8 RTC_Get(tm *timer)
 	timer->week=RTC_Get_Week(timer->w_year,timer->w_month,timer->w_date);//获取星期   
 	return 0;
 }
+
+unsigned int get_sec_between(tm *current,tm *dest)
+{
+	unsigned int sec;
+	int hour,min;
+	
+	if(dest->hour >= current->hour && dest->min >= current->min){
+		hour = dest->hour - current->hour;
+		min = dest->min - current->min;
+		min = hour*60+min;
+		
+		if(min ==0)
+			min = 24*60;
+	}
+	else{
+		min = 24*60-(current->hour*60+current->min) + dest->hour*60+dest->min;
+	}
+	return (min*60);
+	
+	
+}
+RTC_IRQ_FUNC g_rtc_irqhandler = NULL;
+
+void register_rtc_irq_hander(RTC_IRQ_FUNC handler)
+{
+	g_rtc_irqhandler = handler;
+}
+
+
+void RTC_SetAlarm_user(tm *dest,RTC_IRQ_FUNC handler)
+{
+		tm current;
+		unsigned int sec;
+	
+		g_rtc_irqhandler = handler;
+		RTC_Get(&current);
+	
+		sec = get_sec_between(&current,dest) + current.sec;
+		RTC_SetAlarm(RTC_GetCounter()+sec);
+		RTC_WaitForLastTask();
+}
+
+
+
 
 
 

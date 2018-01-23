@@ -87,17 +87,23 @@ typedef struct
 	u8 min;
 	u8 sec; 		
 	//公历日月年周
-	u16 w_year;
+	
 	u8	w_month;
 	u8	w_date;
-	u8	week;		 
+	u8	week;
+	u16 w_year;	
 }tm;	
 extern tm gRTCTimer;
+
+
+typedef void (*RTC_IRQ_FUNC)(void *);
 
 u8 RTC_UserInit(void);
 u8 RTC_Set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec);
 u8 RTC_Get(tm *timer);
-
+void register_rtc_irq_hander(RTC_IRQ_FUNC handler);
+unsigned int get_sec_between(tm *current,tm *dest);
+void RTC_SetAlarm_user(tm *dest,RTC_IRQ_FUNC handler);
 /**************************** self define end *************************/
 
 void RTC_ITConfig(uint16_t RTC_IT, FunctionalState NewState);

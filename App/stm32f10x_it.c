@@ -103,27 +103,34 @@ uint32_t GetTimer(void)
 
 }
 
+
+
+
+
+extern RTC_IRQ_FUNC g_rtc_irqhandler;
+
 void RTC_IRQHandler(void)
 {							    
 	if(RTC->CRL&0x0001)//秒钟中断
 	{							
-		//RTC_Get();//更新时间 
-		DebugPrint("RTC timer:");
-#if 0		
-		PrintInt(gRTCTimer.w_year,0,1);
-		PrintInt(gRTCTimer.w_month,0,1);
-		PrintInt(gRTCTimer.w_date,0,1);
-		PrintInt(gRTCTimer.hour,0,1);
-		PrintInt(gRTCTimer.min,0,1);
-		PrintInt(gRTCTimer.sec,0,0);
-#endif
+
 	}
 	if(RTC->CRL&0x0002)//闹钟中断
 	{
 		RTC->CRL&=~(0x0002);//清闹钟中断
-	} 				  								 
+	} 				  
+
+	if(g_rtc_irqhandler)
+		g_rtc_irqhandler(NULL);
+	
 	RTC->CRL&=0X0FFA;         //清除溢出，秒钟中断标志
 	while(!(RTC->CRL&(1<<5)));//等待RTC寄存器操作完成		   							 	   	 
+}
+
+
+void RTCAlarm_IRQHandler(void)
+{
+	EXTI_ClearITPendingBit(EXTI_Line17);
 }
 
 void TIM3_IRQHandler(void)   //TIM3中断
