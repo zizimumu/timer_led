@@ -470,9 +470,9 @@ ARM Macro Assembler    Page 8
               00000400 
               00000400 
               00000000 
-Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\obj\st
-artup_stm32f10x_md.d -o.\obj\startup_stm32f10x_md.o -IC:\Keil\ARM\RV31\INC -IC:
-\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\ST\STM32F10x --list=.\lis\startup_stm
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\Obj\st
+artup_stm32f10x_md.d -o.\Obj\startup_stm32f10x_md.o -IC:\Keil\ARM\RV31\Inc -IC:
+\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\ST\STM32F10x --list=.\Lis\startup_stm
 32f10x_md.lst LIB\CMSISV1.2.0\Core\CM3\startup\arm\startup_stm32f10x_md.s
 
 

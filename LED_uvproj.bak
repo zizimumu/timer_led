@@ -61,6 +61,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -115,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -126,7 +128,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -134,9 +136,10 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>10</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -150,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>Segger\JL2CM3.dll</Driver>
+            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -160,9 +163,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4098</DriverSelection>
+            <DriverSelection>4103</DriverSelection>
           </Flash1>
-          <Flash2>Segger\JL2CM3.dll</Flash2>
+          <bUseTDR>0</bUseTDR>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
@@ -208,7 +212,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -342,6 +346,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>STM32F10X_LD</Define>
@@ -357,6 +362,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -426,6 +432,21 @@
               <FileType>1</FileType>
               <FilePath>.\App\ADXL345.c</FilePath>
             </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>readline.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\readline.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmd_array.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\cmd_array.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -470,6 +491,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -514,6 +536,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -558,6 +581,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -602,6 +626,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -651,6 +676,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -695,6 +721,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -744,6 +771,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -793,6 +821,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -842,6 +871,7 @@
                     <Rwpi>2</Rwpi>
                     <wLevel>0</wLevel>
                     <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>

@@ -23,7 +23,7 @@ int  rtc_function(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
 	tm timer;
 	char tmp[32];
 	char *src;
-	unsigned int year,month,data,hour,min;
+	unsigned int year,month,data,hour,min,temp;
 	if(argc<2){
 			printf("arg err,please use as fellow\r\n");
 			printf("    rtc get/set");
@@ -53,6 +53,40 @@ int  rtc_function(struct cmd_tbl_s *tst_tbl,int a,int b,char *buf[])
 				sscanf(&tmp[0],"%d",&year);
 				//tmp[10] = 0;
 				printf("setting	%d	%02d %02d,%02d:%02d\r\n",year,month,data,hour,min);
+
+				RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);	
+				
+				/* Allow access to BKP Domain ,PWR_CR register*/
+				PWR_BackupAccessCmd(ENABLE);	
+				
+				/* Reset Backup Domain ,RCC_BDCR register*/
+				BKP_DeInit();	
+				
+				/* Enable LSE */
+				RCC_LSEConfig(RCC_LSE_ON);	
+				/* Wait till LSE is ready */
+				while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET){	
+					temp++;
+				}
+				//if(temp>=72000000)	return 1;    
+				/* Select LSE as RTC Clock Source */
+				RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);		  
+				/* Enable RTC Clock */
+				RCC_RTCCLKCmd(ENABLE);	
+				/* Wait for RTC registers synchronization */
+				RTC_WaitForSynchro();		
+				/* Wait until last write operation on RTC registers has finished */
+				RTC_WaitForLastTask();	
+				/* Enable the RTC Second */
+				RTC_ITConfig(RTC_IT_ALR, ENABLE);	
+				/* Wait until last write operation on RTC registers has finished */
+				RTC_WaitForLastTask();	
+				/* Set RTC prescaler: set RTC period to 1sec */
+				/* RTC period = RTCCLK/RTC_PR = (32.768 KHz)/(32767+1) */
+				RTC_SetPrescaler(32767);
+				/* Wait until last write operation on RTC registers has finished */
+				RTC_WaitForLastTask();	
+
 				RTC_Set(year,month,data,hour,min,0);
 		}
 		else{

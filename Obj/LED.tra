@@ -9,6 +9,8 @@
 ### List of Objects: adding '".\obj\afe4400.o"'
 ### List of Objects: adding '".\obj\adxl345.o"'
 ### List of Objects: adding '".\obj\lcd.o"'
+### List of Objects: adding '".\obj\readline.o"'
+### List of Objects: adding '".\obj\cmd_array.o"'
 ### List of Objects: adding '".\obj\misc.o"'
 ### List of Objects: adding '".\obj\stm32f10x_exti.o"'
 ### List of Objects: adding '".\obj\stm32f10x_gpio.o"'
@@ -23,14 +25,14 @@
 ### List of Objects: adding '".\obj\stm32f10x_rtc.o"'
 ### List of Objects: adding '".\obj\stm32f10x_pwr.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M3 ".\obj\core_cm3.o" ".\obj\startup_stm32f10x_md.o" ".\obj\adc_read.o" ".\obj\stm32f10x_it.o" ".\obj\delay.o" ".\obj\afe4400.o" ".\obj\adxl345.o" ".\obj\lcd.o" ".\obj\misc.o" ".\obj\stm32f10x_exti.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_dma.o" ".\obj\stm32f10x_adc.o" ".\obj\stm32f10x_tim.o" ".\obj\stm32f10x_spi.o" ".\obj\stm32f10x_i2c.o" ".\obj\stm32f10x_bkp.o" ".\obj\stm32f10x_rtc.o" ".\obj\stm32f10x_pwr.o" --library_type=microlib --strict --scatter ".\Obj\LED.sct" 
+--cpu Cortex-M3 ".\obj\core_cm3.o" ".\obj\startup_stm32f10x_md.o" ".\obj\adc_read.o" ".\obj\stm32f10x_it.o" ".\obj\delay.o" ".\obj\afe4400.o" ".\obj\adxl345.o" ".\obj\lcd.o" ".\obj\readline.o" ".\obj\cmd_array.o" ".\obj\misc.o" ".\obj\stm32f10x_exti.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_dma.o" ".\obj\stm32f10x_adc.o" ".\obj\stm32f10x_tim.o" ".\obj\stm32f10x_spi.o" ".\obj\stm32f10x_i2c.o" ".\obj\stm32f10x_bkp.o" ".\obj\stm32f10x_rtc.o" ".\obj\stm32f10x_pwr.o" --strict --scatter ".\Obj\LED.sct" 
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list ".\Lis\LED.map" -o ".\Obj\LED.axf"### Preparing Environment (PrepEnvAds)
 ### ADS-LD Output File: '.\Obj\LED.axf'
 ### ADS-LD Command File: '.\Obj\LED.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '.\Obj\LED.lnp', Handle=0x00000B54
+### Creating CmdFile '.\Obj\LED.lnp', Handle=0x0000037C
 ### Writing '.lnp' file
 ### ADS-LD Command file '.\Obj\LED.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

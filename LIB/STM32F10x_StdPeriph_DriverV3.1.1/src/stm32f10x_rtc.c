@@ -351,7 +351,7 @@ void setRTC_NVIC(void )
 		
 	NVIC_Init(&NVIC_InitStructure); 	
 	
-	
+#if 0	
 	  NVIC_InitStructure.NVIC_IRQChannel = RTCAlarm_IRQn;  
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;  
@@ -364,7 +364,7 @@ void setRTC_NVIC(void )
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  //外部中断触发沿选择:设置输入线路下降沿为中断请求
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
-	
+#endif	
 }
 
 u8 RTC_UserInit(void)
@@ -381,6 +381,8 @@ u8 RTC_UserInit(void)
 		/* Allow access to BKP Domain ,PWR_CR register*/
 		PWR_BackupAccessCmd(ENABLE);	
 		
+
+#if 0
 		/* Reset Backup Domain ,RCC_BDCR register*/
 		//BKP_DeInit();	
 		
@@ -411,7 +413,7 @@ u8 RTC_UserInit(void)
 		//RTC_Set(2013,12,17,14,4,55); 
 		//BKP_WriteBackupRegister(BKP_DR1, 0X5050);	
 		
-		
+#endif		
 
 	
 	
