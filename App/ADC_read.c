@@ -4,7 +4,12 @@
 #include <stdio.h>
 #include "stm32f10x_usart.h"
 
+#ifndef USB_STOP_MODE
 #define TIMER_COUNT 36000  //1Khz
+#else
+#define TIMER_COUNT 16000  //500hz
+#endif
+
 #define MAX_PWM_COUNT  TIMER_COUNT
 
 void PWM_Configuration(void)
@@ -87,12 +92,17 @@ void led_trigle(void)
 
 void Init_All_Periph(void)
 {
-	RCC_Configuration();	
+	RCC_ClocksTypeDef RCC_ClocksStatus;
+	
+	//use clock default,8Mhz
+#ifndef USB_STOP_MODE
+	RCC_Configuration();
+#endif	
 	NVIC_Configuration();
 
 	ComInit(COM1,115200);
 	//usart1TxDMAInit();
-	delay_init(72);
+	delay_init( );
 	
 	//TIM3_UserConfiguration();
 
@@ -101,7 +111,11 @@ void Init_All_Periph(void)
 	
 	PWM_Configuration();
 
-
+	
+	RCC_GetClocksFreq(&RCC_ClocksStatus);
+	printf("system clock : sysclk %d ,hclk %d ,APB11 %d ,APB2 %d \r\n", \
+					RCC_ClocksStatus.SYSCLK_Frequency,RCC_ClocksStatus.HCLK_Frequency, \
+					RCC_ClocksStatus.PCLK1_Frequency,RCC_ClocksStatus.PCLK2_Frequency);
 
 }
 
@@ -122,17 +136,25 @@ int g_user_pwm_min = 0;
 
 void pwm_start_out(void)
 {
-	unsigned int sec,step,pwmval,cnt;
+	unsigned int msec,step,pwmval,cnt,delay;
 	
-	sec = USR_DEFINE_PWM_COUNT*60;
-	step = TIMER_COUNT/sec;
+	
+	msec = USR_DEFINE_PWM_COUNT*600;
+	step = TIMER_COUNT/msec;
 	pwmval = 0;
+	delay = 1000;
 	while(1){
 			TIM_SetCompare2(TIM3,pwmval);
 			pwmval += step;
-			delay_ms(1000);
+			delay_ms(delay);
 			if(pwmval > TIMER_COUNT)
 				break;
+			if(pwmval > TIMER_COUNT/4){
+				//delay = 1000;
+				step = step * 10;
+				printf("goto big step\r\n");
+			}
+			
 			
 			led_trigle();
 	}
@@ -218,9 +240,13 @@ int main(void)
 			}
 			
 			printf("\r\n\r\ngo to sleep\r\n");
-			__WFI();
-			//PWR_EnterSTOPMode(PWR_Regulator_LowPower,PWR_STOPEntry_WFI);
+#ifdef USB_STOP_MODE
 			
+			PWR_EnterSTOPMode(PWR_Regulator_LowPower,PWR_STOPEntry_WFI); // when resum from stop mode,the system clock is HSI 8Mhz
+#else
+			__WFI();
+#endif
+			delay_ms(10);
 			printf("system resum\r\n");
 			//PWR_EnterSTANDBYMode();
 			

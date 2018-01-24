@@ -20,7 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_rtc.h"
-
+#include <stdio.h>
 /** @addtogroup STM32F10x_StdPeriph_Driver
   * @{
   */
@@ -351,7 +351,7 @@ void setRTC_NVIC(void )
 		
 	NVIC_Init(&NVIC_InitStructure); 	
 	
-#if 0	
+#if 1
 	  NVIC_InitStructure.NVIC_IRQChannel = RTCAlarm_IRQn;  
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;  
@@ -374,7 +374,7 @@ u8 RTC_UserInit(void)
 	
 	//check if it is the first time init
 	//if (BKP_ReadBackupRegister(BKP_DR1) != 0x5050){	 			
-	if (1){	
+	if (0){	
 		/* Enable PWR and BKP clocks */
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);	
 		
@@ -382,7 +382,7 @@ u8 RTC_UserInit(void)
 		PWR_BackupAccessCmd(ENABLE);	
 		
 
-#if 0
+#if 1
 		/* Reset Backup Domain ,RCC_BDCR register*/
 		//BKP_DeInit();	
 		
@@ -419,33 +419,25 @@ u8 RTC_UserInit(void)
 	
 	}
 	else
-		{
-		/* Check if the Power On Reset flag is set */
-		if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)	//检查指定的RCC标志位设置与否:POR/PDR复位
-			{
-			//printf("\rPower On Reset occurred....");
-			}
-		/* Check if the Pin Reset flag is set */
-		else if (RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET)	//检查指定的RCC标志位设置与否:管脚复位
-			{
-			//printf("\rExternal Reset occurred....");
-			}
+	{
+		/* Enable PWR and BKP clocks */
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);	
+		
+		/* Allow access to BKP Domain ,PWR_CR register*/
+		PWR_BackupAccessCmd(ENABLE);	
 		
 		//printf("\rNo need to configure RTC....");
 		/* Wait for RTC registers synchronization */
 		RTC_WaitForSynchro();	//等待最近一次对RTC寄存器的写操作完成
 		
 		/* Enable the RTC Second */
-		RTC_ITConfig(RTC_IT_SEC, ENABLE);	//使能RTC秒中断
+		RTC_ITConfig(RTC_IT_ALR, ENABLE);	
 		/* Wait until last write operation on RTC registers has finished */
 		RTC_WaitForLastTask();	//等待最近一次对RTC寄存器的写操作完成
-		}		    				     
-	//RTC_Get();//更新时间 
+	}    				     
 	
 	/* Clear reset flags */
 	RCC_ClearFlag();	//清除RCC的复位标志位
-
-	 //RTC_EXTI_INITIAL(ENABLE);
 		
 	setRTC_NVIC();
 	return 0; //ok
@@ -581,7 +573,12 @@ void RTC_SetAlarm_user(tm *dest,RTC_IRQ_FUNC handler)
 		RTC_Get(&current);
 	
 		sec = get_sec_between(&current,dest) + current.sec;
-		RTC_SetAlarm(RTC_GetCounter()+sec);
+		printf("alarm will wake up after %d s\r\n",sec);
+	
+	
+		sec = RTC_GetCounter()+sec;
+		
+		RTC_SetAlarm(sec);
 		RTC_WaitForLastTask();
 }
 

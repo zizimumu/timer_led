@@ -6,10 +6,13 @@ static u16 fac_ms=0;//ms延时倍乘数
 //SYSTICK的时钟固定为HCLK时钟的1/8
 //SYSCLK:系统时钟   单位 MHz
 //
-void delay_init(u8 SYSCLK)
+void delay_init(void)
 {
+	RCC_ClocksTypeDef RCC_ClocksStatus;
+	RCC_GetClocksFreq(&RCC_ClocksStatus);
+	
 	SysTick->CTRL&=0xfffffffb;//bit2清空,选择外部时钟  HCLK/8
-	fac_us=SYSCLK/8;		    
+	fac_us=(RCC_ClocksStatus.HCLK_Frequency/1000000)/8;		    
 	fac_ms=(u16)fac_us*1000;
 }								    
 //延时nms
