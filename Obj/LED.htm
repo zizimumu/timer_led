@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Obj\LED.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Obj\LED.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Thu Jan 25 10:23:23 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Thu Jan 25 15:34:59 2018
 <BR><P>
 <H3>Maximum Stack Usage =        348 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1056,7 +1056,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_SetAlarm_user
 </UL>
 
-<P><STRONG><a name="[af]"></a>RTC_SetAlarm_user</STRONG> (Thumb, 56 bytes, Stack size 24 bytes, stm32f10x_rtc.o(i.RTC_SetAlarm_user))
+<P><STRONG><a name="[af]"></a>RTC_SetAlarm_user</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, stm32f10x_rtc.o(i.RTC_SetAlarm_user))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = RTC_SetAlarm_user &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1313,7 +1313,7 @@ Global Symbols
 <P><STRONG><a name="[3b]"></a>fputc</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.fputc))
 <BR>[Address Reference Count : 1]<UL><LI> _printf_char_file.o(.text)
 </UL>
-<P><STRONG><a name="[b0]"></a>get_sec_between</STRONG> (Thumb, 86 bytes, Stack size 12 bytes, stm32f10x_rtc.o(i.get_sec_between))
+<P><STRONG><a name="[b0]"></a>get_sec_between</STRONG> (Thumb, 96 bytes, Stack size 12 bytes, stm32f10x_rtc.o(i.get_sec_between))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = get_sec_between
 </UL>
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_SetAlarm_user
@@ -1328,7 +1328,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_start_out
 </UL>
 
-<P><STRONG><a name="[57]"></a>main</STRONG> (Thumb, 376 bytes, Stack size 32 bytes, adc_read.o(i.main))
+<P><STRONG><a name="[57]"></a>main</STRONG> (Thumb, 390 bytes, Stack size 32 bytes, adc_read.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 348 + Unknown Stack Size
 <LI>Call Chain = main &rArr; main_loop &rArr; run_command &rArr; parse_line &rArr; usartStrSend
 </UL>

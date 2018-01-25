@@ -9,106 +9,16 @@ Project File Date:  01/24/2018
 <h2>Output:</h2>
 Build target 'FLASH'
 compiling ADC_read.c...
-App\ADC_read.c(139): warning:  #177-D: variable "cnt" was declared but never referenced
-App\ADC_read.c(181): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12576 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling ADC_read.c...
-App\ADC_read.c(141): warning:  #177-D: variable "cnt" was declared but never referenced
-App\ADC_read.c(183): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12596 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling ADC_read.c...
-App\ADC_read.c(144): warning:  #177-D: variable "cnt" was declared but never referenced
-App\ADC_read.c(186): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12636 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
+App\ADC_read.c(190): warning:  #177-D: variable "sec" was declared but never referenced
 compiling stm32f10x_rtc.c...
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(487): warning:  #550-D: variable "daycnt" was set but never used
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(541): warning:  #177-D: variable "sec" was declared but never referenced
+LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(488): warning:  #550-D: variable "daycnt" was set but never used
+LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(542): warning:  #177-D: variable "sec" was declared but never referenced
 linking...
-Program Size: Code=12632 RO-data=1140 RW-data=288 ZI-data=2480  
+Program Size: Code=12836 RO-data=1140 RW-data=288 ZI-data=2480  
 FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling stm32f10x_rtc.c...
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(487): warning:  #550-D: variable "daycnt" was set but never used
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(541): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12700 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
+".\Obj\LED.axf" - 0 Errors, 3 Warning(s).
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling stm32f10x_rtc.c...
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(487): warning:  #550-D: variable "daycnt" was set but never used
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(541): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12744 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling stm32f10x_rtc.c...
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(487): warning:  #550-D: variable "daycnt" was set but never used
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(541): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12740 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
-Build target 'FLASH'
-linking...
-Program Size: Code=12740 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 0 Warning(s).
-Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling stm32f10x_rtc.c...
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(487): warning:  #550-D: variable "daycnt" was set but never used
-LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(541): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12756 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
 Erase Done.
 Programming Done.
@@ -118,7 +28,7 @@ compiling stm32f10x_rtc.c...
 LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(488): warning:  #550-D: variable "daycnt" was set but never used
 LIB\STM32F10x_StdPeriph_DriverV3.1.1\src\stm32f10x_rtc.c(542): warning:  #177-D: variable "sec" was declared but never referenced
 linking...
-Program Size: Code=12784 RO-data=1140 RW-data=288 ZI-data=2480  
+Program Size: Code=12852 RO-data=1140 RW-data=288 ZI-data=2480  
 FromELF: creating hex file...
 ".\Obj\LED.axf" - 0 Errors, 2 Warning(s).
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
@@ -127,22 +37,12 @@ Programming Done.
 Verify OK.
 Build target 'FLASH'
 compiling ADC_read.c...
-App\ADC_read.c(189): warning:  #177-D: variable "sec" was declared but never referenced
+App\ADC_read.c(190): warning:  #177-D: variable "sec" was declared but never referenced
 linking...
-Program Size: Code=12804 RO-data=1140 RW-data=288 ZI-data=2480  
+Program Size: Code=12852 RO-data=1140 RW-data=288 ZI-data=2480  
 FromELF: creating hex file...
 ".\Obj\LED.axf" - 0 Errors, 1 Warning(s).
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'FLASH'
-compiling ADC_read.c...
-App\ADC_read.c(190): warning:  #177-D: variable "sec" was declared but never referenced
-linking...
-Program Size: Code=12812 RO-data=1140 RW-data=288 ZI-data=2480  
-FromELF: creating hex file...
-".\Obj\LED.axf" - 0 Errors, 1 Warning(s).
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 
 Load "F:\\Demo_self\\STM32F1XX\\timer_led\\Obj\\LED.axf" 

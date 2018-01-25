@@ -542,12 +542,12 @@ unsigned int get_sec_between(tm *current,tm *dest)
 	unsigned int sec;
 	int hour,min;
 	
-	if(dest->hour >= current->hour && dest->min >= current->min){
+	if(dest->hour > current->hour ||  (dest->hour == current->hour&&dest->min >= current->min)){
 		hour = dest->hour - current->hour;
-		min = dest->min - current->min;
+		min = (int)dest->min - (int)current->min;
 		min = hour*60+min;
 		
-		if(min ==0)
+		if(min <=0)
 			min = 24*60;
 	}
 	else{
@@ -574,7 +574,7 @@ void RTC_SetAlarm_user(tm *dest,RTC_IRQ_FUNC handler)
 		RTC_Get(&current);
 	
 		sec = get_sec_between(&current,dest) + current.sec;
-		printf("alarm will wake up after %d s\r\n",sec);
+		printf("alarm will wake up after %d s,%02d:%02d\r\n",sec,dest->hour,dest->min);
 	
 	
 		sec = RTC_GetCounter()+sec;

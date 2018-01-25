@@ -241,7 +241,9 @@ int main(void)
 					pwm_start_out();
 					pwm_start = 0;
 				
-					timer_dest.hour = USR_DEFINE_HOUR+USR_DEFINE_PWM_HOUR;
+					RTC_Get(&timer);
+					timer_dest.hour = timer.hour+USR_DEFINE_PWM_HOUR;
+					timer_dest.min = timer.min;
 					RTC_SetAlarm_user(&timer_dest,pwm_stop_irqhandler);
 
 					printf("pwm end...\r\n");
