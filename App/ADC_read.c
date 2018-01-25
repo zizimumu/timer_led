@@ -101,14 +101,19 @@ void Init_All_Periph(void)
 	NVIC_Configuration();
 
 	ComInit(COM1,115200);
+	
+	printf("com init done\r\n");
 	//usart1TxDMAInit();
 	delay_init( );
 	
 	//TIM3_UserConfiguration();
 
 	LedInit();
+	
+	printf("rtc init ...\r\n");
 	RTC_UserInit();
 	
+	printf("pwm init ...\r\n");
 	PWM_Configuration();
 
 	
@@ -137,21 +142,25 @@ int g_user_pwm_min = 0;
 void pwm_start_out(void)
 {
 	unsigned int msec,step,pwmval,cnt,delay;
-	
+	int stat = 0;
 	
 	msec = USR_DEFINE_PWM_COUNT*600;
-	step = TIMER_COUNT/msec;
+	step = TIMER_COUNT/4/msec;
 	pwmval = 0;
-	delay = 1000;
+	delay = 100;
+	//cnt = 0;
+	//step = 1;
 	while(1){
 			TIM_SetCompare2(TIM3,pwmval);
 			pwmval += step;
+			cnt++;
 			delay_ms(delay);
 			if(pwmval > TIMER_COUNT)
 				break;
-			if(pwmval > TIMER_COUNT/4){
-				//delay = 1000;
-				step = step * 10;
+			if((stat == 0) && (pwmval > TIMER_COUNT/4)){
+				stat = 1;
+				delay = 1000 ;
+				step = (TIMER_COUNT - pwmval)/(USR_DEFINE_PWM_COUNT*60);
 				printf("goto big step\r\n");
 			}
 			
@@ -187,6 +196,10 @@ int main(void)
 	g_user_alarm_min = 20;
 	g_user_pwm_min = 10;
 
+	//pwm_start_out();
+	
+	
+	
 	
 	printf("system startimg...\r\n");
 	back = BKP_ReadBackupRegister(BKP_DR1);
@@ -198,6 +211,11 @@ int main(void)
 	if(back != 0){
 		g_user_pwm_min = (back & 0xff)%60;
 	}
+	
+	
+	
+	
+	
 	
 	RTC_Get(&timer);
 	printf("current timer is :\r\n");

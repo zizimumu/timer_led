@@ -373,8 +373,9 @@ u8 RTC_UserInit(void)
 	uint32_t temp=0;
 	
 	//check if it is the first time init
-	//if (BKP_ReadBackupRegister(BKP_DR1) != 0x5050){	 			
-	if (0){	
+	if (BKP_ReadBackupRegister(BKP_DR3) != 0x55aa){	 			
+	//if (1){	
+		printf("rtc need reconfig ...\r\n");
 		/* Enable PWR and BKP clocks */
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);	
 		
@@ -411,7 +412,7 @@ u8 RTC_UserInit(void)
 		/* Wait until last write operation on RTC registers has finished */
 		RTC_WaitForLastTask();	
 		//RTC_Set(2013,12,17,14,4,55); 
-		//BKP_WriteBackupRegister(BKP_DR1, 0X5050);	
+		BKP_WriteBackupRegister(BKP_DR3, 0x55aa);	
 		
 #endif		
 
@@ -428,7 +429,7 @@ u8 RTC_UserInit(void)
 		
 		//printf("\rNo need to configure RTC....");
 		/* Wait for RTC registers synchronization */
-		RTC_WaitForSynchro();	//等待最近一次对RTC寄存器的写操作完成
+		//RTC_WaitForSynchro();	//等待最近一次对RTC寄存器的写操作完成
 		
 		/* Enable the RTC Second */
 		RTC_ITConfig(RTC_IT_ALR, ENABLE);	
