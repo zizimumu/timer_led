@@ -145,7 +145,7 @@ void pwm_start_out(void)
 	int stat = 0;
 	
 	msec = USR_DEFINE_PWM_COUNT*600;
-	step = TIMER_COUNT/4/msec;
+	step = 1;//TIMER_COUNT/4/msec;
 	pwmval = 0;
 	delay = 100;
 	//cnt = 0;
@@ -157,7 +157,7 @@ void pwm_start_out(void)
 			delay_ms(delay);
 			if(pwmval > TIMER_COUNT)
 				break;
-			if((stat == 0) && (pwmval > TIMER_COUNT/4)){
+			if((stat == 0) && (cnt >= USR_DEFINE_PWM_COUNT*600)){
 				stat = 1;
 				delay = 1000 ;
 				step = (TIMER_COUNT - pwmval)/(USR_DEFINE_PWM_COUNT*60);

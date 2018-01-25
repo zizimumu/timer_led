@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F10X_LD</Define>
+              <Define>STM32F10X_LD,USB_STOP_MODE</Define>
               <Undefine></Undefine>
               <IncludePath>.\App;.\LIB\CMSISV1.2.0\Core\CM3;.\LIB\CMSISV1.2.0\Core\CM3\startup\arm;.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\src;.\LIB\STM32F10x_StdPeriph_DriverV3.1.1\inc</IncludePath>
             </VariousControls>
