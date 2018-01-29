@@ -303,15 +303,15 @@ typedef enum
 
 /*********************self define start ******************************/
 #define LED1_GPIO GPIOC
-#define LED1_PIN  GPIO_Pin_1
+#define LED1_PIN  GPIO_Pin_3
 #define LED1_CLOCK RCC_APB2Periph_GPIOC
 
 #define LED2_GPIO GPIOC
-#define LED2_PIN  GPIO_Pin_3
+#define LED2_PIN  GPIO_Pin_1
 #define LED2_CLOCK RCC_APB2Periph_GPIOC
 
 #define LED3_GPIO GPIOC
-#define LED3_PIN  GPIO_Pin_3
+#define LED3_PIN  GPIO_Pin_13
 #define LED3_CLOCK RCC_APB2Periph_GPIOC
 
 

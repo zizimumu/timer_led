@@ -71,12 +71,14 @@ void LedInit(void )
 
 	RCC_APB2PeriphClockCmd(LED1_CLOCK, ENABLE);
 	
-	GPIO_InitStructure.GPIO_Pin = LED1_PIN;
+	GPIO_InitStructure.GPIO_Pin = LED1_PIN|LED2_PIN|LED3_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;		
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(LED1_GPIO, &GPIO_InitStructure);
 
 	GPIO_SetBits(LED1_GPIO,LED1_PIN);
+	GPIO_SetBits(LED2_GPIO,LED2_PIN);
+	GPIO_SetBits(LED3_GPIO,LED3_PIN);
 }
 
 void led_trigle(void)
@@ -212,12 +214,14 @@ int main(void)
 		g_user_pwm_min = (back & 0xff)%60;
 	}
 	
-	
+	back = BKP_ReadBackupRegister(BKP_DR4);
 	
 	
 	
 	
 	RTC_Get(&timer);
+
+	printf("last alarm time is %02d:%02d\r\n",((back&0xff00) >>8),(back&0x00ff));
 	printf("current timer is :\r\n");
 	printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
 	printf("user set timer is %d:%d ,pwm mini %d\r\n",USR_DEFINE_HOUR,USR_DEFINE_MIN,USR_DEFINE_PWM_COUNT);
@@ -238,6 +242,8 @@ int main(void)
 					printf("current timer is :\r\n");
 					printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
 				
+					BKP_WriteBackupRegister(BKP_DR4, ((uint16_t)timer.hour<<8 | timer.min));	
+
 					pwm_start_out();
 					pwm_start = 0;
 				

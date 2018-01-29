@@ -557,7 +557,7 @@ unsigned int get_sec_between(tm *current,tm *dest)
 	
 	
 }
-RTC_IRQ_FUNC g_rtc_irqhandler = NULL;
+volatile RTC_IRQ_FUNC g_rtc_irqhandler = NULL;
 
 void register_rtc_irq_hander(RTC_IRQ_FUNC handler)
 {

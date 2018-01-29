@@ -120,16 +120,30 @@ void RTC_IRQHandler(void)
 		RTC->CRL&=~(0x0002);//清闹钟中断
 	} 				  
 
-	if(g_rtc_irqhandler)
+	if(g_rtc_irqhandler){
 		g_rtc_irqhandler(NULL);
+		g_rtc_irqhandler = NULL;
+		
+	}
 	
 	RTC->CRL&=0X0FFA;         //清除溢出，秒钟中断标志
-	while(!(RTC->CRL&(1<<5)));//等待RTC寄存器操作完成		   							 	   	 
+	while(!(RTC->CRL&(1<<5)));//等待RTC寄存器操作完成	
+	
+	GPIO_ResetBits(LED3_GPIO,LED3_PIN);	   							 	   	 
 }
 
 
 void RTCAlarm_IRQHandler(void)
 {
+	if(g_rtc_irqhandler){
+		g_rtc_irqhandler(NULL);
+		g_rtc_irqhandler = NULL;
+		
+	}
+
+	GPIO_ResetBits(LED2_GPIO,LED2_PIN);
+
+
 	EXTI_ClearITPendingBit(EXTI_Line17);
 }
 
