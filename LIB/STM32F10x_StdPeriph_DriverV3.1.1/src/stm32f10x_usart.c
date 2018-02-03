@@ -1127,6 +1127,7 @@ unsigned char usartCharGet_timeout(void)
 	
 	printf("press any KEY to enter cmd mode\r\n");
 	
+	USART1->SR = 0x00;
 	while((USART1->SR&0X20)==0){
 			delay_ms(1);
 			cnt++;

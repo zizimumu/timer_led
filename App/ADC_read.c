@@ -81,13 +81,13 @@ void LedInit(void )
 	GPIO_SetBits(LED3_GPIO,LED3_PIN);
 }
 
-void led_trigle(void)
+void led_trigle(uint16_t led )
 {
 	static unsigned int on = 0;
 	if(on & 0x1)
-		GPIO_SetBits(LED1_GPIO,LED1_PIN);
+		GPIO_SetBits(LED1_GPIO,led);
 	else
-		GPIO_ResetBits(LED1_GPIO,LED1_PIN);
+		GPIO_ResetBits(LED1_GPIO,led);
 	
 	on++;
 }
@@ -149,7 +149,7 @@ void pwm_start_out(void)
 	msec = USR_DEFINE_PWM_COUNT*600;
 	step = 1;//TIMER_COUNT/4/msec;
 	pwmval = 0;
-	delay = 100;
+	delay = 1000;
 	//cnt = 0;
 	//step = 1;
 	while(1){
@@ -159,7 +159,7 @@ void pwm_start_out(void)
 			delay_ms(delay);
 			if(pwmval > TIMER_COUNT)
 				break;
-			if((stat == 0) && (cnt >= USR_DEFINE_PWM_COUNT*600)){
+			if((stat == 0) && (cnt >= USR_DEFINE_PWM_COUNT*60)){
 				stat = 1;
 				delay = 1000 ;
 				step = (TIMER_COUNT - pwmval)/(USR_DEFINE_PWM_COUNT*60);
@@ -167,7 +167,7 @@ void pwm_start_out(void)
 			}
 			
 			
-			led_trigle();
+			led_trigle(LED1_PIN);
 	}
 }
 
@@ -177,11 +177,14 @@ int pwm_start = 0,pwm_stop = 0;
 void pwm_start_irqhandler(void *arg)
 {
 	pwm_start = 1;
+	//__DSB();
+	//GPIO_ResetBits(LED2_GPIO,LED2_PIN);
 }
 
 void pwm_stop_irqhandler(void *arg)
 {
 	pwm_stop = 1;
+	//__DSB();
 }
 	
 	
@@ -196,7 +199,7 @@ int main(void)
 
 	g_user_alarm_hour = 6;
 	g_user_alarm_min = 20;
-	g_user_pwm_min = 10;
+	g_user_pwm_min = 5;
 
 	//pwm_start_out();
 	
@@ -221,7 +224,7 @@ int main(void)
 	
 	RTC_Get(&timer);
 
-	printf("last alarm time is %02d:%02d\r\n",((back&0xff00) >>8),(back&0x00ff));
+	printf("last flag value is 0x%x\r\n",back);
 	printf("current timer is :\r\n");
 	printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
 	printf("user set timer is %d:%d ,pwm mini %d\r\n",USR_DEFINE_HOUR,USR_DEFINE_MIN,USR_DEFINE_PWM_COUNT);
@@ -235,6 +238,10 @@ int main(void)
 		while(1){
 					
 			//RTC_Get(&timer);
+
+			//delay_ms(500);
+			//led_trigle(LED3_PIN);
+
 			if(pwm_start){
 					RTC_Get(&timer);
 
@@ -242,7 +249,7 @@ int main(void)
 					printf("current timer is :\r\n");
 					printf("	%d	%02d %02d,%02d:%02d:%02d\r\n",timer.w_year,timer.w_month,timer.w_date,timer.hour,timer.min,timer.sec);
 				
-					BKP_WriteBackupRegister(BKP_DR4, ((uint16_t)timer.hour<<8 | timer.min));	
+						
 
 					pwm_start_out();
 					pwm_start = 0;
@@ -272,15 +279,18 @@ int main(void)
 #else
 			__WFI();
 #endif
-			delay_ms(10);
+			//GPIO_ResetBits(LED1_GPIO,LED1_PIN);
+			//delay_ms(10);
 			printf("system resum\r\n");
+			
+			//BKP_WriteBackupRegister(BKP_DR4, (pwm_start<<8) | pwm_stop);
 			//PWR_EnterSTANDBYMode();
 			
 			
 		}
 	}
 	else{
-
+		 //GPIO_ResetBits(LED2_GPIO,LED2_PIN);
 		main_loop();
 	}
 
