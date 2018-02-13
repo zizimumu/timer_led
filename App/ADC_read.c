@@ -269,6 +269,7 @@ int main(void)
 					pwm_stop = 0;
 				
 					timer_dest.hour = USR_DEFINE_HOUR;
+					timer_dest.min = USR_DEFINE_MIN;
 					RTC_SetAlarm_user(&timer_dest,pwm_start_irqhandler);
 			}
 			
